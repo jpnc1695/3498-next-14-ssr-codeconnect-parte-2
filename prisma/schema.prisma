@@ -9,29 +9,46 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("POSTGRES_PRISMA_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
+  id       Int       @id @default(autoincrement())
   name     String
-  userName String @unique
+  userName String    @unique
   avatar   String
   Post     Post[]
+  Comment  Comment[]
 }
 
 model Post {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   cover      String
   title      String
-  slug       String   @unique
+  slug       String    @unique
   body       String
   markdown   String
-  createdAt  DateTime @default(now())
-  updateddAt DateTime @updatedAt
+  createdAt  DateTime  @default(now())
+  updateddAt DateTime  @updatedAt
   authorId   Int
   authorName String
-  author     User     @relation(fields: [authorId], references: [id])
+  author     User      @relation(fields: [authorId], references: [id])
+  comments   Comment[]
+  likes      Int @default(0)
+}
+
+model Comment {
+  id         Int       @id @default(autoincrement())
+  text       String
+  createdAt  DateTime  @default(now())
+  updateddAt DateTime  @updatedAt
+  authorId   Int
+  author     User      @relation(fields: [authorId], references: [id])
+  postId     Int
+  post       Post      @relation(fields: [postId], references: [id])
+  parentId   Int?
+  parent     Comment?  @relation("CommentChildren", fields: [parentId], references: [id])
+  children   Comment[] @relation("CommentChildren")
 }
