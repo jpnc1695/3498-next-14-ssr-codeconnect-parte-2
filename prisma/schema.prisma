@@ -10,27 +10,28 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  name String
+  id       Int    @id @default(autoincrement())
+  name     String
   userName String @unique
-  avatar String
-  Post  Post[]
+  avatar   String
+  Post     Post[]
 }
 
 model Post {
-  id Int @id @default(autoincrement())
-  cover String
-  title String
-  slug String @unique
-  body String
-  markdown String
-  createdAt DateTime @default(now())
+  id         Int      @id @default(autoincrement())
+  cover      String
+  title      String
+  slug       String   @unique
+  body       String
+  markdown   String
+  createdAt  DateTime @default(now())
   updateddAt DateTime @updatedAt
-  authorId Int
+  authorId   Int
   authorName String
-  author User @relation(fields: [authorId ], references: [id])
+  author     User     @relation(fields: [authorId], references: [id])
 }
