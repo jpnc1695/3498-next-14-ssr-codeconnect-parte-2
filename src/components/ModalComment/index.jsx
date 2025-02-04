@@ -12,7 +12,7 @@ export const ModalComment = () => {
       <Modal ref={modalRef}>
         <h1>Olá meu mano !!!</h1>
       </Modal>
-      <IconButton onClick={() => modalRef.current.openModal}>
+      <IconButton onClick={() => modalRef.current.openModal()}>
         <Chat />
       </IconButton>
     </>
