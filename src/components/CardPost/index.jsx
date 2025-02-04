@@ -2,14 +2,12 @@ import Image from "next/image";
 import { Avatar } from "../Avatar";
 import styles from "./cardpost.module.css";
 import Link from "next/link";
-import { IconButton } from "../IconButton";
-import { ThumbsUp } from "../icons/ThumbsUp";
+import { ThumbsUpButton } from "./ThumbsUpButton";
 import { incrementThumbsUp } from "@/actions";
 
 export const CardPost = ({ post, highlight }) => {
+  const submitThumbsUp = incrementThumbsUp.bind(null, post);
 
-  const submitThumbsUp = incrementThumbsUp.bind(null,post);
-  
   return (
     <article className={styles.card} style={{ width: highlight ? 993 : 486 }}>
       <header className={styles.header}>
@@ -29,9 +27,7 @@ export const CardPost = ({ post, highlight }) => {
       <footer className={styles.footer}>
         <div>
           <form action={submitThumbsUp}>
-            <IconButton>
-              <ThumbsUp />
-            </IconButton>
+            <ThumbsUpButton />
             <p>{post.likes}</p>
           </form>
         </div>
