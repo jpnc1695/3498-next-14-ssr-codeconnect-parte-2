@@ -7,7 +7,9 @@ import { useFormStatus } from "react-dom";
 
 export const ThumbsUpButton = () => {
   const { pending } = useFormStatus();
-  return <IconButton>
+  return (
+        <IconButton disabled = {pending}>
             {pending ? <Spiner /> : <ThumbsUp />}
-        </IconButton>;
+        </IconButton>
+  )
 };

@@ -5,7 +5,7 @@ import { resolve } from "styled-jsx/css";
 
 export async function incrementThumbsUp(post) {
 
-    await new Promise ((resolve) => setTimeout(resolve, 1500))
+    // await new Promise ((resolve) => setTimeout(resolve, 1500))
 
     await db.post.update({
         where:{
