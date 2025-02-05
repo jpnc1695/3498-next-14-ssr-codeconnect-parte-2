@@ -48,7 +48,7 @@ export async function postComment(post, formData) {
 export async function postReply(parent, formData) {
     const author = await db.user.findFirst({
         where: {
-            username: 'anabeatriz_dev'
+            userName: 'anabeatriz_dev'
         }
     })
 

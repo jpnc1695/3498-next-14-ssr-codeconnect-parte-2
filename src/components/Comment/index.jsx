@@ -1,8 +1,9 @@
 import Image from "next/image"
+import styles from './comment.module.css'
 
 export const Comment = ({comment}) =>{
     return(
-        <div>
+        <div className={styles.comment}>
             <Image 
                 src={comment.author.avatar}
                 width={32}
