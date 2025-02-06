@@ -1,33 +1,34 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Comment } from '../Comment'
-import styles from './replies.module.css'
+import { useState } from "react";
+import { Comment } from "../Comment";
+import { ReplyModal } from "../ModalReply";
+import styles from "./replies.module.css";
 
-export const Replies = ({comment}) => {
+export const Replies = ({ comment }) => {
+  const [showReplies, setShowReplies] = useState(false);
 
-    const [showReplies, setShowReplies] = useState(false)
+  return (
+    <div className={styles.container}>
+      <div className={styles.replies}>
+        <button
+          className={styles.btn}
+          onClick={() => setShowReplies(!showReplies)}
+        >
+          {showReplies ? "Ocultar" : "Ver"} respostas
+        </button>
 
-    return (<div className={styles.container}>
-
-        <div className={styles.replies}>
-            <button 
-                className={styles.btn} 
-                onClick={() => setShowReplies(!showReplies)}
-            >
-                {showReplies ? 'Ocultar' : 'Ver'} respostas
-            </button>
-
-                {showReplies && 
-                    <ul>
-                        {comment.children
-                                .map(reply =>
-                                        <li key={reply.id}>
-                                            <Comment comment={reply}/>
-                                        </li>
-                                 )}
-                    </ul>
-                }
-        </div>
-    </div>)
-}
+        {showReplies && (
+          <ul>
+            {comment.children.map((reply) => (
+              <li key={reply.id}>
+                <Comment comment={reply} />
+                <ReplyModal comment={reply}/>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+};
