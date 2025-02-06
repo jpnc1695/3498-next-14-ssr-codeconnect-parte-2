@@ -1,12 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Comment } from "../Comment";
 import { ReplyModal } from "../ModalReply";
 import styles from "./replies.module.css";
 
 export const Replies = ({ comment }) => {
   const [showReplies, setShowReplies] = useState(false);
+  const [replies, setReplies] = useState([])
+
+  async function fetchData() {
+        const response = await fetch(`/api/comment/${comment.id}/replies`)
+        const data = await response.json()
+        setReplies(data)
+  }
+
+  useEffect(() => {
+    if(showReplies){
+        fetchData()
+    }
+  },[showReplies])
 
   return (
     <div className={styles.container}>
@@ -20,7 +33,7 @@ export const Replies = ({ comment }) => {
 
         {showReplies && (
           <ul>
-            {comment.children.map((reply) => (
+            {replies.map((reply) => (
               <li key={reply.id}>
                 <Comment comment={reply} />
                 <ReplyModal comment={reply}/>
