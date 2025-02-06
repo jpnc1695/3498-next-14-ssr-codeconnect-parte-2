@@ -1,9 +1,10 @@
 'use client'
 
 import { useState } from 'react'
+import { Comment } from '../Comment'
 import styles from './replies.module.css'
 
-export const Replies = () => {
+export const Replies = ({comment}) => {
 
     const [showReplies, setShowReplies] = useState(false)
 
@@ -16,6 +17,17 @@ export const Replies = () => {
             >
                 {showReplies ? 'Ocultar' : 'Ver'} respostas
             </button>
+
+                {showReplies && 
+                    <ul>
+                        {comment.children
+                                .map(reply =>
+                                        <li key={reply.id}>
+                                            <Comment comment={reply}/>
+                                        </li>
+                                 )}
+                    </ul>
+                }
         </div>
     </div>)
 }
